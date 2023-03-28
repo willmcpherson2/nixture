@@ -1,0 +1,36 @@
+* Nixture
+
+#+BEGIN_QUOTE
+Nix for the web mixture
+#+END_QUOTE
+
+Nixture helps you build websites without getting in your way.
+
+It adds:
+
+- Templating (Jinja2)
+- Markup (Org-mode)
+- Backend compilers (GHC)
+- Frontend compilers (GHCJS)
+
+For [[./example][example]]:
+
+#+BEGIN_SRC nix
+  let
+    inherit (import <nixpkgs> { }) symlinkJoin;
+    inherit (import ./..) ghc ghcjs optimiseHaskellJs compileJinja;
+  in
+  symlinkJoin {
+    name = "example";
+    paths = [
+      (ghc.callCabal2nix "server" ./server { })
+      (optimiseHaskellJs (ghcjs.callCabal2nix "hs-script" ./client/hs-script { }))
+      (compileJinja ./client/index.html)
+    ];
+  }
+#+END_SRC
+
+This will compile the ~server~ Cabal project to a native binary, the
+~hs-script~ Cabal project to JavaScript, and the ~index.html~ Jinja2
+template to HTML. ~compileJinja~ automatically compiles markup files
+so they can be ~included~ freely.

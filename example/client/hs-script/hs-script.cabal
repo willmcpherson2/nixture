@@ -1,0 +1,10 @@
+cabal-version: 2.4
+name: hs-script
+version: 0.1.0.0
+
+executable hs-script
+  hs-source-dirs: app
+  main-is: Main.hs
+  default-language: Haskell2010
+  ghc-options: -Wall
+  build-depends: base, ghcjs-dom-jsffi
