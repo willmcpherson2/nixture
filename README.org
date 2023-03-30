@@ -83,4 +83,4 @@ Run server:
   ./result/bin/server result
 #+END_SRC
 
-./example/rendered.png
+[[./example/rendered.png]]
