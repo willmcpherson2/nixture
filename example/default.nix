@@ -7,6 +7,6 @@ symlinkJoin {
   paths = [
     (ghc.callCabal2nix "server" ./server { })
     (optimiseHaskellJs (ghcjs.callCabal2nix "hs-script" ./client/hs-script { }))
-    (compileJinja ./client/index.html)
+    (compileJinja ./client/index.html.j2)
   ];
 }

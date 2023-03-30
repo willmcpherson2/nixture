@@ -85,7 +85,7 @@ rec {
   compileJinja = template:
     let
       dir = builtins.dirOf template;
-      name = builtins.baseNameOf template;
+      outName = lib.strings.removeSuffix ".j2" (builtins.baseNameOf template);
       jinja-inputs = compileJinjaInputs dir;
     in
     runCommand
@@ -94,6 +94,6 @@ rec {
       ''
         mkdir -p $out
         cp -r ${jinja-inputs}/* .
-        j2 ${template} > $out/${name}
+        j2 ${template} > $out/${outName}
       '';
 }

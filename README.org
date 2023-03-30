@@ -27,12 +27,12 @@ It adds:
     paths = [
       (ghc.callCabal2nix "server" ./server { })
       (optimiseHaskellJs (ghcjs.callCabal2nix "hs-script" ./client/hs-script { }))
-      (compileJinja ./client/index.html)
+      (compileJinja ./client/index.html.j2)
     ];
   }
 #+END_SRC
 
-[[./example/client/index.html][client/index.html]]
+[[./example/client/index.html.j2][client/index.html.j2]]
 
 #+BEGIN_SRC html
   <!DOCTYPE html>
@@ -73,9 +73,9 @@ Build:
 #+END_SRC
 
 This will compile the ~server~ Cabal project to a native binary, the
-~hs-script~ Cabal project to JavaScript, and the ~index.html~ Jinja2
-template to HTML. ~compileJinja~ automatically compiles markup files
-so they can be ~include~'d freely.
+~hs-script~ Cabal project to JavaScript, and the ~index.html.j2~
+Jinja2 template to HTML. ~compileJinja~ automatically compiles markup
+files so they can be ~include~'d freely.
 
 Run server:
 
