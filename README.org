@@ -13,7 +13,9 @@ It adds:
 - Backend compilers (GHC)
 - Frontend compilers (GHCJS)
 
-For [[./example][example]]:
+** Example
+
+[[./example/default.nix][default.nix]]
 
 #+BEGIN_SRC nix
   let
@@ -30,7 +32,55 @@ For [[./example][example]]:
   }
 #+END_SRC
 
+[[./example/client/index.html][client/index.html]]
+
+#+BEGIN_SRC html
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>example</title>
+      <style>{% include "style.css" %}</style>
+    </head>
+
+    <body>
+      <h2>HTML</h2>
+      <pre><code>{% filter escape %}{% include "html-content.html" %}{% endfilter %}</code></pre>
+      {% include "html-content.html" %}
+
+      <h2>Org-mode</h2>
+      <pre><code>{% filter escape %}{% include "org-content.org" %}{% endfilter %}</code></pre>
+      {% include "org-content.html" %}
+
+      <h2>JavaScript</h2>
+      <pre><code>{% filter escape %}{% include "js-script.js" %}{% endfilter %}</code></pre>
+      <div id="js-output"></div>
+      <script>{% include "js-script.js" %}</script>
+
+      <h2>Haskell</h2>
+      <pre><code>{% filter escape %}{% include "hs-script/app/Main.hs" %}{% endfilter %}</code></pre>
+      <div id="hs-output"></div>
+      <script defer src="hs-script.js"></script>
+    </body>
+  </html>
+#+END_SRC
+
+Build:
+
+#+BEGIN_SRC shell
+  nix-build
+#+END_SRC
+
 This will compile the ~server~ Cabal project to a native binary, the
 ~hs-script~ Cabal project to JavaScript, and the ~index.html~ Jinja2
 template to HTML. ~compileJinja~ automatically compiles markup files
-so they can be ~included~ freely.
+so they can be ~include~'d freely.
+
+Run server:
+
+#+BEGIN_SRC shell
+  ./result/bin/server result
+#+END_SRC
+
+./example/rendered.png
