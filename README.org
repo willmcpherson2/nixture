@@ -51,11 +51,6 @@ It adds:
 
 [[./example/default.nix][default.nix]]
 
-- ~server~ will be compiled to ~bin/server~
-- ~hs-script~ will be compiled to ~hs-script.js~
-- ~org-content.org~ will be compiled to ~org-content.org.html~
-- ~index.html.j2~ will be compiled to ~index.html~
-
 #+BEGIN_SRC nix
   let
     inherit (import <nixpkgs> { }) symlinkJoin;
@@ -74,6 +69,11 @@ It adds:
     ];
   }
 #+END_SRC
+
+- ~server~ will be compiled to ~bin/server~
+- ~hs-script~ will be compiled to ~hs-script.js~
+- ~org-content.org~ will be compiled to ~org-content.org.html~
+- ~index.html.j2~ will be compiled to ~index.html~
 
 Build:
 
