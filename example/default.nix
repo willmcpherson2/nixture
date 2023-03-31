@@ -4,7 +4,7 @@ let
     (import
       (builtins.fetchTarball
         "https://github.com/willmcpherson2/nixture/archive/main.tar.gz"))
-    ghc ghcjs optimiseHaskellJs compileJinja;
+    ghc ghcjs optimiseHaskellJs compileNixture;
 in
 symlinkJoin {
   name = "example";

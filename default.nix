@@ -1,5 +1,5 @@
 let
-  inherit (import <nixpkgs> { }) pkgs lib runCommand writeTextDir symlinkJoin;
+  inherit (import <nixpkgs> { }) pkgs runCommand;
 in
 rec {
   inherit (pkgs) closurecompiler pandoc j2cli;
