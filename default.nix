@@ -47,6 +47,15 @@ rec {
         pandoc -f org -t html ${file} > $out/${outPath}
       '';
 
+  copyFile = path: file:
+    runCommand
+      "copy-file"
+      { }
+      ''
+        mkdir -p "$(dirname "$out/${path}")"
+        cp ${file} "$out/${path}"
+      '';
+
   compileJinjaInput = root: file:
     let
       dir = builtins.dirOf file;
@@ -61,7 +70,7 @@ rec {
       cases = {
         org = compileOrg file (pathFromRoot (dir + "/${name}.html"));
       };
-      plain = writeTextDir (pathFromRoot file) (builtins.readFile file);
+      plain = copyFile (pathFromRoot file) file;
       results =
         if builtins.isList nameAndExtension
           && builtins.length nameAndExtension == 2
