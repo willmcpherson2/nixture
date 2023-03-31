@@ -31,7 +31,7 @@ It adds:
     paths = [
       (ghc.callCabal2nix "server" ./server { })
       (optimiseHaskellJs (ghcjs.callCabal2nix "hs-script" ./client/hs-script { }))
-      (compileJinja ./client/index.html.j2)
+      (compileNixture ./client)
     ];
   }
 #+END_SRC
@@ -54,8 +54,8 @@ It adds:
       {% include "html-content.html" %}
 
       <h2>Org-mode</h2>
-      <pre><code>{% filter escape %}{% include "org-content.org" %}{% endfilter %}</code></pre>
-      {% include "org-content.html" %}
+      <pre><code>{% filter escape %}{% include "org-content.org.html" %}{% endfilter %}</code></pre>
+      {% include "org-content.org.html" %}
 
       <h2>JavaScript</h2>
       <pre><code>{% filter escape %}{% include "js-script.js" %}{% endfilter %}</code></pre>
@@ -77,9 +77,8 @@ Build:
 #+END_SRC
 
 This will compile the ~server~ Cabal project to a native binary, the
-~hs-script~ Cabal project to JavaScript, and the ~index.html.j2~
-Jinja2 template to HTML. ~compileJinja~ automatically compiles markup
-files so they can be ~include~'d freely.
+~hs-script~ Cabal project to JavaScript and any markup files or Jinja
+templates in the ~client~ directory.
 
 Run server:
 
