@@ -6,9 +6,8 @@ rec {
 
   reflex =
     import
-      (builtins.fetchTarball {
-        url = "https://github.com/reflex-frp/reflex-platform/archive/123a6f487ca954fd983f6d4cd6b2a69d4c463d10.tar.gz";
-      })
+      (builtins.fetchTarball
+        "https://github.com/reflex-frp/reflex-platform/archive/123a6f487ca954fd983f6d4cd6b2a69d4c463d10.tar.gz")
       { };
 
   ghc = reflex.ghc8_6;
@@ -17,9 +16,8 @@ rec {
 
   haskell-language-server =
     (import
-      (builtins.fetchTarball {
-        url = "https://github.com/NixOS/nixpkgs/archive/0756b8a7bf25e7a5b4fbfa578e95a28cb5ef6380.tar.gz";
-      })
+      (builtins.fetchTarball
+        "https://github.com/NixOS/nixpkgs/archive/0756b8a7bf25e7a5b4fbfa578e95a28cb5ef6380.tar.gz")
       { }).haskell-language-server.override { supportedGhcVersions = [ "865" ]; };
 
   optimiseHaskellJs = drv:

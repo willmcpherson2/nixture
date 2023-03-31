@@ -1,6 +1,10 @@
 let
   inherit (import <nixpkgs> { }) symlinkJoin;
-  inherit (import ./..) ghc ghcjs optimiseHaskellJs compileJinja;
+  inherit
+    (import
+      (builtins.fetchTarball
+        "https://github.com/willmcpherson2/nixture/archive/main.tar.gz"))
+    ghc ghcjs optimiseHaskellJs compileJinja;
 in
 symlinkJoin {
   name = "example";
