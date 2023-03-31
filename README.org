@@ -15,27 +15,6 @@ It adds:
 
 ** Example
 
-[[./example/default.nix][default.nix]]
-
-#+BEGIN_SRC nix
-  let
-    inherit (import <nixpkgs> { }) symlinkJoin;
-    inherit
-      (import
-        (builtins.fetchTarball
-          "https://github.com/willmcpherson2/nixture/archive/main.tar.gz"))
-      ghc ghcjs optimiseHaskellJs compileJinja;
-  in
-  symlinkJoin {
-    name = "example";
-    paths = [
-      (ghc.callCabal2nix "server" ./server { })
-      (optimiseHaskellJs (ghcjs.callCabal2nix "hs-script" ./client/hs-script { }))
-      (compileNixture ./client)
-    ];
-  }
-#+END_SRC
-
 [[./example/client/index.html.j2][client/index.html.j2]]
 
 #+BEGIN_SRC html
@@ -70,15 +49,37 @@ It adds:
   </html>
 #+END_SRC
 
+[[./example/default.nix][default.nix]]
+
+- ~server~ will be compiled to ~bin/server~
+- ~hs-script~ will be compiled to ~hs-script.js~
+- ~org-content.org~ will be compiled to ~org-content.org.html~
+- ~index.html.j2~ will be compiled to ~index.html~
+
+#+BEGIN_SRC nix
+  let
+    inherit (import <nixpkgs> { }) symlinkJoin;
+    inherit
+      (import
+        (builtins.fetchTarball
+          "https://github.com/willmcpherson2/nixture/archive/main.tar.gz"))
+      ghc ghcjs optimiseHaskellJs compileJinja;
+  in
+  symlinkJoin {
+    name = "example";
+    paths = [
+      (ghc.callCabal2nix "server" ./server { })
+      (optimiseHaskellJs (ghcjs.callCabal2nix "hs-script" ./client/hs-script { }))
+      (compileNixture ./client)
+    ];
+  }
+#+END_SRC
+
 Build:
 
 #+BEGIN_SRC shell
   nix-build
 #+END_SRC
-
-This will compile the ~server~ Cabal project to a native binary, the
-~hs-script~ Cabal project to JavaScript and any markup files or Jinja
-templates in the ~client~ directory.
 
 Run server:
 
