@@ -43,12 +43,11 @@ rec {
       "compile-nixture"
       { buildInputs = [ j2cli pandoc ]; }
       ''
-        mkdir -p $out
-        cp -r ${root}/* $out
+        cp -r --no-preserve=mode ${root} $out
         cd $out
 
-        for file in $(find . -type f -name "*.org"); do
-          pandoc -f org -t html -o "$file".html "$file" 
+        for file in $(find ~+ -type f -name "*.org"); do
+          pandoc -f org -t html -o "$file".html "$file"
         done
 
         for file in $(find ~+ -type f -name "*.j2"); do
