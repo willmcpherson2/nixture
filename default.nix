@@ -47,8 +47,6 @@ rec {
         cp -r --no-preserve=mode ${root}/* $out/static
         cd $out/static
 
-        ls -al
-
         for file in $(find ~+ -type f -name "*.org"); do
           pandoc -f org -t html -o "$file".html "$file"
         done
