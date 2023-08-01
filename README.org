@@ -71,9 +71,9 @@ It adds:
 #+END_SRC
 
 - ~server~ will be compiled to ~bin/server~
-- ~hs-script~ will be compiled to ~hs-script.js~
-- ~org-content.org~ will be compiled to ~org-content.org.html~
-- ~index.html.j2~ will be compiled to ~index.html~
+- ~hs-script~ will be compiled to ~static/hs-script.js~
+- ~org-content.org~ will be compiled to ~static/org-content.org.html~
+- ~index.html.j2~ will be compiled to ~static/index.html~
 
 Build:
 
