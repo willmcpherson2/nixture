@@ -25,7 +25,7 @@ rec {
       "optimise-haskell-js"
       { buildInputs = [ closurecompiler ]; }
       ''
-        mkdir -p $out
+        mkdir -p $out/static
         for dir in $(find ${drv} -name "*.jsexe"); do
           filename="$(basename "$dir" .jsexe).js"
           closure-compiler \
@@ -33,7 +33,7 @@ rec {
             --compilation_level ADVANCED_OPTIMIZATIONS \
             --jscomp_off=checkVars \
             --externs=$dir/all.js.externs \
-            $dir/all.js > $out/$filename &
+            $dir/all.js > $out/static/$filename &
         done
         wait
       '';
@@ -43,8 +43,11 @@ rec {
       "compile-nixture"
       { buildInputs = [ j2cli pandoc ]; }
       ''
-        cp -r --no-preserve=mode ${root} $out
-        cd $out
+        mkdir -p $out/static
+        cp -r --no-preserve=mode ${root}/* $out/static
+        cd $out/static
+
+        ls -al
 
         for file in $(find ~+ -type f -name "*.org"); do
           pandoc -f org -t html -o "$file".html "$file"
