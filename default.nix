@@ -1,9 +1,5 @@
-let
-  inherit (import <nixpkgs> { }) pkgs runCommand;
-in
+{ pkgs ? import <nixpkgs> { } }:
 rec {
-  inherit (pkgs) closurecompiler pandoc j2cli;
-
   reflex =
     import
       (builtins.fetchTarball
@@ -21,9 +17,9 @@ rec {
       { }).haskell-language-server.override { supportedGhcVersions = [ "865" ]; };
 
   optimiseHaskellJs = drv:
-    runCommand
+    pkgs.runCommand
       "optimise-haskell-js"
-      { buildInputs = [ closurecompiler ]; }
+      { buildInputs = [ pkgs.closurecompiler ]; }
       ''
         mkdir -p $out/static
         for dir in $(find ${drv} -name "*.jsexe"); do
@@ -39,9 +35,9 @@ rec {
       '';
 
   compileNixture = root:
-    runCommand
+    pkgs.runCommand
       "compile-nixture"
-      { buildInputs = [ j2cli pandoc ]; }
+      { buildInputs = [ pkgs.j2cli pkgs.pandoc ]; }
       ''
         mkdir -p $out/static
         cp -r --no-preserve=mode ${root}/* $out/static
