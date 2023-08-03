@@ -84,7 +84,7 @@ Build:
 Run server:
 
 #+BEGIN_SRC shell
-  ./result/bin/server result
+  ./result/bin/server result/static/
 #+END_SRC
 
 [[./example/rendered.png]]
